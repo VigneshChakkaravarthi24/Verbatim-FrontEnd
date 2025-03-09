@@ -64,9 +64,8 @@ const TestInstructionsPage = () => {
           <ul className={`mt-4 ${sharedClasses.list}`}>
             <li>For this task, you will have 3 minutes to read a passage about an academic topic.</li>
             <li>You may take short notes on a piece of paper.</li>
-            <li>You will have 20 minutes to write a detailed summary of the lecture.</li>
-            <li>Explain how the lecture relates to the reading passage.</li>
-            <li>While you write, you will be able to see the reading passage. Your notes will not be scored.</li>
+            <li>You will have 30 minutes in total for this test.</li>
+            
           </ul>
           <button
             className={`${sharedClasses.button} ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}

@@ -33,6 +33,7 @@ const WriteEssayPage = () => {
           setPrompt(result.data.quiz.prompt);
           setTimerDuration(parseInt(result.data.remainingTime, 10) || 0); // Ensure valid number
           sessionStorage.setItem("timer1", result.data.remainingTime);
+          console.log("The answer is ,",result.data.answer)
           setAnswer(result.data.answer);
         } else if (result && result.data && result.data.errorMessage) {
           setPageError(result.data.errorMessage);
