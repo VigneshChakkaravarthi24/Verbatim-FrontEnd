@@ -1,7 +1,48 @@
-import React from "react";
+import {React,useState} from "react";
+import { useNavigate } from "react-router-dom";
+import Spinner from '../Spinner/Spinner'; // Import the Spinner component
+import BASE_URL from "../../../localhost";
 import Navbar from "../Navbar/Navbar";
+import axios from "axios";
 const ResearchConsent = () => {
+    const navigate = useNavigate()
+    const [name, setName] = useState("");
+  const [signature, setSignature] = useState("");
+  const [date, setDate] = useState("");
+  const [errorMessage,setErrorMesage]=useState()
+  const [loading,setLoading]=useState(false)
+  const handleSubmit = async(event) => {
+    event.preventDefault()
+    setLoading(true)
+    let body={
+        name:name,
+        signature:signature,
+        date:date
+    }
+    try{
+    const result = await axios.post(`${BASE_URL}/user/agree`,body)
+    setLoading(false)
+    console.log("The result is ",result.data.message)
+    if (result.data.message)
+    {
+        navigate("/login")
+    }
+    else if (result.data.errorMessage)
+    {
+setErrorMesage(result.data.errorMessage)
+    }
+}
+catch(error)
+{
+    setErrorMesage(error)
+}
+  };
+
+  const isFormValid=name&signature&date
+
+
   return (
+    
     <div>
         <Navbar/>
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -70,8 +111,57 @@ const ResearchConsent = () => {
     <p className="mt-2">如果您在研究開始前或研究期間有任何問題，可以聯繫特殊教育與讀寫研究系的李光敏博士，電郵：kwangmin.1.lee@wmich.edu 或 </p>
     <p className="mt-2">kck3914@wmich.edu。您也可以聯繫機構審查委員會（IRB）主席（電話：269-387-8293）或研究與創新副主任（電話：269-387-8298）。</p>
     <p className="mt-2">本同意書已獲得西密歇根大學機構審查委員會批准使用，批准日期已在右下角蓋章。 如果蓋章日期超過一年，請勿參與本研究。</p>
+    <div className="mt-4">
+            <label className="block text-lg font-semibold">姓名</label>
+            <input
+              type="text"
+              placeholder="請輸入您的姓名"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="mt-4">
+            <label className="block text-lg font-semibold">簽名</label>
+            <input
+              type="text"
+              placeholder="請輸入您的簽名"
+              value={signature}
+              onChange={(e) => setSignature(e.target.value)}
+              className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div className="mt-4">
+            <label className="block text-lg font-semibold">日期</label>
+            <input
+              type="date"
+              value={date}
+              max={new Date().toISOString().split("T")[0]}
+              onChange={(e) => setDate(e.target.value)}
+              className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div className="mt-6 flex justify-center">
+          <button
+  onClick={handleSubmit}
+  className="px-6 py-3 bg-yellow-400 text-white font-semibold rounded-lg hover:bg-yellow-500 focus:outline-none"
+  disabled={loading}
+>
+<Spinner loading={loading} /> {/* Use the Spinner component */}
+              {!loading && 'Submit'} {/* Show "Login" text if not loading */}
+</button>
+        </div>
+        <p className="mt-4">{errorMessage}</p>
+
     </div>
-    
+   
+           
+
+         
     </div>
   );
 };

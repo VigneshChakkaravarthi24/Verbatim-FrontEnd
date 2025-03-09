@@ -2,7 +2,7 @@ import React, { useState, useRef, forwardRef, useImperativeHandle } from "react"
 import { getVerbatim } from "./getVerbatim";
 const verbatimFlaggedWords=[]
 
-const TextEditor = forwardRef(({ refText, onSave, onSubmit, userGroup }, ref) => {
+const TextEditor = forwardRef(({ refText, onSave,initialvalue, onSubmit, userGroup }, ref) => {
   const [editableText, setEditableText] = useState("");
   const editableContentRef = useRef(null);
   const lastWordCount = useRef(0);
@@ -174,7 +174,7 @@ const TextEditor = forwardRef(({ refText, onSave, onSubmit, userGroup }, ref) =>
         }}
         className="border border-gray-300 rounded-lg bg-white flex-grow"
       >
-        Edit me!
+       {initialvalue}
       </div>
     </div>
   );

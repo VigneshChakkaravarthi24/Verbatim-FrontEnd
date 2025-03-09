@@ -20,9 +20,12 @@ import { loader as AudioPageLoader2 } from './Components/AudioPage2/AduioPage2';
 import { loader as EssayPage2Loader } from './Components/EssayPage2/Essaypage2';
 import TaiwanInstructions from './Components/TaiwanInstructions/TaiwanInstructions';
 const router = createBrowserRouter([
+  {path :"/",
+    element:<TaiwanInstructions/>
+  },
   {
-    path: "/",
-    element: <TaiwanInstructions />,
+    path: "/login",
+    element: <LoginPage />,
   },
   {
     element: <PrivateRoute element={<InstructionsLayout />} />,
