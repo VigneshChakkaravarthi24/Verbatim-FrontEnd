@@ -18,11 +18,11 @@ import { loader as WelcomeLoader } from './Components/WelcomePage/WelcomePage';
 import { loader as EssayLoader } from './Components/EssayPage/EssayPage';
 import { loader as AudioPageLoader2 } from './Components/AudioPage2/AduioPage2';
 import { loader as EssayPage2Loader } from './Components/EssayPage2/Essaypage2';
-
+import TaiwanInstructions from './Components/TaiwanInstructions/TaiwanInstructions';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginPage />,
+    element: <TaiwanInstructions />,
   },
   {
     element: <PrivateRoute element={<InstructionsLayout />} />,
