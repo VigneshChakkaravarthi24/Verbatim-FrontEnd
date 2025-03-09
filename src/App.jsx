@@ -19,9 +19,14 @@ import { loader as EssayLoader } from './Components/EssayPage/EssayPage';
 import { loader as AudioPageLoader2 } from './Components/AudioPage2/AduioPage2';
 import { loader as EssayPage2Loader } from './Components/EssayPage2/Essaypage2';
 import TaiwanInstructions from './Components/TaiwanInstructions/TaiwanInstructions';
+import TaiwanEnglishInstructions from "./Components/TaiwanEnglishInstructions/TaiwanInstructions"
 const router = createBrowserRouter([
   {path :"/",
     element:<TaiwanInstructions/>
+  },
+  {
+    path:"/english",
+    element:<TaiwanEnglishInstructions/>
   },
   {
     path: "/login",

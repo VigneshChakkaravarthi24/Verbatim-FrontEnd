@@ -25,7 +25,7 @@ const ResearchConsent = () => {
     console.log("The result is ",result.data.message)
     if (result.data.message)
     {
-        navigate("/login")
+        navigate("/english")
     }
     else if (result.data.errorMessage)
     {

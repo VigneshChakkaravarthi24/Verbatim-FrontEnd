@@ -1,15 +1,45 @@
 import {React,useState} from "react";
+import { useNavigate } from "react-router-dom";
+import Spinner from '../Spinner/Spinner'; // Import the Spinner component
+import BASE_URL from "../../../localhost";
 import Navbar from "../Navbar/Navbar";
-const TaiwanEnglishInstructions = () => {
+import axios from "axios";
+const ResearchConsent = () => {
+    const navigate = useNavigate()
     const [name, setName] = useState("");
   const [signature, setSignature] = useState("");
   const [date, setDate] = useState("");
-  const handleSubmit = () => {
-    // Handle form submission
-    console.log("Name:", name);
-    console.log("Signature:", signature);
-    console.log("Date:", date);
+  const [errorMessage,setErrorMesage]=useState()
+  const [loading,setLoading]=useState(false)
+  const handleSubmit = async(event) => {
+    event.preventDefault()
+    setLoading(true)
+    let body={
+        name:name,
+        signature:signature,
+        date:date
+    }
+    try{
+    const result = await axios.post(`${BASE_URL}/user/agree`,body)
+    setLoading(false)
+    console.log("The result is ",result.data.message)
+    if (result.data.message)
+    {
+        navigate("/login")
+    }
+    else if (result.data.errorMessage)
+    {
+setErrorMesage(result.data.errorMessage)
+    }
+}
+catch(error)
+{
+    setErrorMesage(error)
+}
   };
+
+  const isFormValid=name&signature&date
+
 
   return (
     
@@ -21,30 +51,30 @@ const TaiwanEnglishInstructions = () => {
         <br></br>
         Special Education and Literacy Studies
       </h1>
-      <p className="text-lg font-semibold">Principal Investigator：Dr. Kwangmin Lee</p>
-      <p className="text-lg font-semibold">Title of Study:Providing textual enhancement for sound source use to second/foreign (L2) language test-takers</p>
+      <p className="text-lg font-semibold">Principal Investigator:	Dr. Kwangmin Lee</p>
+      <p className="text-lg font-semibold">Title of Study:	Providing textual enhancement for sound source use to second/foreign (L2) language test-takers</p>
       <p className="mt-4">
-
-      You are invited to participate in this research project titled “Providing textual enhancement for sound source use to second/foreign (L2) language test-takers"
-      </p>
-      <h2 className="text-xl font-semibold mt-4">STUDY SUMMARY:</h2>
+      You are invited to participate in this research project titled “Providing textual enhancement for sound source use to second/foreign (L2) language test-takers"      </p>
+      <h2 className="text-xl font-semibold mt-4">STUDY SUMMARY:  </h2>
       <p className="mt-2">
       This consent form is part of an informed consent process for a research study and it will provide information that will help you decide whether you want to take part in this study.  Participation in this study is completely voluntary. The purpose of the research is to examine the extent to which providing textual enhancement targeting instances of verbatim source use affects source use patterns in integrated writing. If you participate in the research, you'll undergo two integrated writing assessments on separate occasions. The first assessment won't provide textual enhancement for direct source use. The second assessment may or may not include textual enhancement, depending on your performance in the initial assessment. Your time in the study will take about one hour per assessment. Possible risk and costs to you for taking part in the study may be minimal, with no sensitive questions. All that's required for this study is to visit the testing center twice at the specified times. Your alternative to taking part in the research study is not to take part in it.    
       </p>
       <br></br>
       <p className="mt-2">
-      The following information in this consent form will provide more detail about the research study.  Please ask any questions if you need more clarification and to assist you in deciding if you wish to participate in the research study.  You are not giving up any of your legal rights by agreeing to take part in this research or by signing this consent form.  After all of your questions have been answered and the consent document reviewed, if you decide to participate in this study, you will be asked to sign this consent form.     </p>
+      The following information in this consent form will provide more detail about the research study.  Please ask any questions if you need more clarification and to assist you in deciding if you wish to participate in the research study.  You are not giving up any of your legal rights by agreeing to take part in this research or by signing this consent form.  After all of your questions have been answered and the consent document reviewed, if you decide to participate in this study, you will be asked to sign this consent form.
+     </p>
       <h2 className="text-xl font-semibold mt-4">What are we trying to find out in this study?</h2>
       <p className="mt-2">
       I am trying to find out the extent to which providing AI-powered support helps with your performance in reading-to-write integrated tasks.
       </p >
       <h2 className="text-xl font-semibold mt-4">Who can participate in this study?</h2>
-      <p className="mt-2">Any undergraduate students at Western Michigan University who speak English as a second language can participate in this study.</p>
+      <p className="mt-2">Any undergraduate students at National Taiwan Ocean University who speak English as a second language can participate in this study. </p>
       <h2 className="text-xl font-semibold mt-4">Where will this study take place?</h2>
-      <p className="mt-2">You will be invited to a computer lab located in Sangren Hall to take the writing assessment twice at a one-week interval between the assessments.</p>
+      <p className="mt-2">You will be given a link to the testing platform to take the writing assessment twice at a one-week interval between the assessments.</p>
       <h2 className="text-xl font-semibold mt-4">What is the time commitment for participating in this study?</h2>
       <p className="mt-2">
-      Each writing assessment will last 30 minutes. Plan for a maximum of 1 hour for each session.      </p>
+      Each writing assessment will last 30 minutes. Plan for a maximum of 1 hour for each session.
+      </p>
       <h2 className="text-xl font-semibold mt-4">What will you be asked to do if you choose to participate in this study?</h2>
       <p className="mt-2">
       All we ask you to do is to take an integrated writing assessment for each of the two assessment sessions, as you would take the Test of English as a Foreign Language (TOEFL) test. You will work on the writing assessments individually and silently.
@@ -59,7 +89,8 @@ const TaiwanEnglishInstructions = () => {
       </p>
       <h2 className="text-xl font-semibold mt-4">What are the benefits of participating in this study?</h2>
       <p className="mt-2">
-      One of the benefits you can expect to reap by participating in this study is that you will be able to learn sound second/foreign language writing practices. You will pay attention to the way you write, reflect on it, and think of ways forward as you read and write for academic purposes.      </p>
+      One of the benefits you can expect to reap by participating in this study is that you will be able to learn sound second/foreign language writing practices. You will pay attention to the way you write, reflect on it, and think of ways forward as you read and write for academic purposes.
+      </p>
       <h2 className="text-xl font-semibold mt-4">Are there any costs associated with participating in this study?</h2>
       <p className="mt-2">There are no costs associated with participating in this study.</p>
       <h2 className="text-xl font-semibold mt-4">Is there any compensation for participating in this study?</h2>
@@ -77,14 +108,14 @@ const TaiwanEnglishInstructions = () => {
     </p>
     <br></br>
     <p className="mt-2">The investigator can also decide to stop your participation in the study without your consent.</p>
-    <p className="mt-2">Should you have any questions prior to or during the study, you can contact Dr. Kwangmin Lee at Special Education and Literacy Studies at kwangmin.1.lee@wmich.edu or kck3914@wmich.edu. You may also contact the Chair, Institutional Review Board at 269-387-8293 or the Vice President for Research and Innovation at 269-387-8298 if questions arise during the course of the study.</p>
-    <p className="mt-2">This consent document has been approved for use for one year by the Western Michigan University Institutional Review Board (WMU IRB), as indicated by the IRB approval date stamped in the lower right corner.  Do not participate in this study if the stamped date is order than one year.</p>
+    <p className="mt-2">Should you have any questions prior to or during the study, you can contact Dr. Kwangmin Lee at Special Education and Literacy Studies at kwangmin.1.lee@wmich.edu or kck3914@wmich.edu. You may also contact the Chair, Institutional Review Board at 269-387-8293 or the Vice President for Research and Innovation at 269-387-8298 if questions arise during the course of the study..1.lee@wmich.edu </p>
+    <p className="mt-2">This consent document has been approved for use for one year by the Western Michigan University Institutional Review Board (WMU IRB), as indicated by the IRB approval date stamped in the lower right corner.  Do not participate in this study if the stamped date is order than one year.。</p>
     <p className="mt-2">I have read this informed consent document.  The risks and benefits have been explained to me.  I agree to take part in this study.</p>
     <div className="mt-4">
-            <label className="block text-lg font-semibold">Name</label>
+            <label className="block text-lg font-semibold">Your Name</label>
             <input
               type="text"
-              placeholder="Your Name"
+              placeholder="Enter your Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -95,7 +126,7 @@ const TaiwanEnglishInstructions = () => {
             <label className="block text-lg font-semibold">Signature</label>
             <input
               type="text"
-              placeholder="Signature"
+              placeholder="Your Initials"
               value={signature}
               onChange={(e) => setSignature(e.target.value)}
               className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -118,11 +149,13 @@ const TaiwanEnglishInstructions = () => {
           <button
   onClick={handleSubmit}
   className="px-6 py-3 bg-yellow-400 text-white font-semibold rounded-lg hover:bg-yellow-500 focus:outline-none"
+  disabled={loading}
 >
-  Submit
+<Spinner loading={loading} /> {/* Use the Spinner component */}
+              {!loading && 'Submit'} {/* Show "Login" text if not loading */}
 </button>
-
         </div>
+        <p className="mt-4">{errorMessage}</p>
 
     </div>
    
@@ -133,4 +166,4 @@ const TaiwanEnglishInstructions = () => {
   );
 };
 
-export default TaiwanEnglishInstructions;
+export default ResearchConsent;
