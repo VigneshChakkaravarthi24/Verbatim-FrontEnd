@@ -20,7 +20,7 @@ const ResearchConsent = () => {
         date:date
     }
     try{
-    const result = await axios.post(`${BASE_URL}/user/agree`,body)
+    const result = await axios.post(`${BASE_URL}/wow/agree`,body)
     setLoading(false)
     console.log("The result is ",result.data.message)
     if (result.data.message)

@@ -10,6 +10,7 @@ import NavigatePage from '../NavigatePage/NavigatePage';
 import { ClipLoader } from 'react-spinners'; // Add the spinner
 
 const WriteEssayPage = () => {
+
   const navigate = useNavigate();
   const editorRef = useRef(null); // Ref to access TextEditor methods
   const [timerDuration, setTimerDuration] = useState(null);
@@ -33,7 +34,6 @@ const WriteEssayPage = () => {
           setPrompt(result.data.quiz.prompt);
           setTimerDuration(parseInt(result.data.remainingTime, 10) || 0); // Ensure valid number
           sessionStorage.setItem("timer1", result.data.remainingTime);
-          console.log("The answer is ,",result.data.answer)
           setAnswer(result.data.answer);
         } else if (result && result.data && result.data.errorMessage) {
           setPageError(result.data.errorMessage);
@@ -94,20 +94,28 @@ const WriteEssayPage = () => {
     }
   };
 
-  const handleTimeUp = () => {
+  const handleTimeUp = async() => {
     if (!timerUpHandled) { // Ensure the timer up logic runs only once
       setTimerUpHandled(true);
       setSubmitting(true);
+     
       if (editorRef.current) {
         const content = editorRef.current.getContent();
-        saveAnswer(content, true).then(() => {
-          sessionStorage.removeItem("timer1");
-          navigate("/essay-2");
-        });
+        const text = content.answer
+        const verbatimFlagged= content.verbatimFlaggedWords
+        console.log("The content is",content.answer,content.verbatimFlagged)
+        try {
+          await saveAnswer(text,verbatimFlagged, true).then(() => navigate("/summary"));
+        } finally {
+          setSubmitting(false);
+        }
+        // saveAnswer(content, true).then(() => {
+        //   sessionStorage.removeItem("timer1");
+        //   navigate("/essay-2");
+        // });
       }
     }
   };
-console.log("The question is ",essayContent)
   if (ended) {
     return (
       <NavigatePage 
@@ -133,7 +141,6 @@ console.log("The question is ",essayContent)
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <Navbar />
-      
       <div className="flex flex-grow overflow-hidden">
         {/* First Column - Essay Content */}
         <div className="w-1/2 p-4 border-r border-gray-300 bg-yellow-100 flex flex-col">

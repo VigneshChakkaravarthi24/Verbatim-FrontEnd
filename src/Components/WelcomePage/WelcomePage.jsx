@@ -37,11 +37,11 @@ const navigate=useNavigate()
         <div className="text-center">
           <h1 className={`text-3xl font-bold ${sharedClasses.textLight}`}>Welcome to Our Application</h1>
           <ul className={`mt-6 ${sharedClasses.list}`}>
-            <li>Explore the features of the application.</li>
-            <li>Get familiar with the user interface.</li>
+            <li>Please do not refresh the page.If you do so, any unsaved changes will be lost.</li>
+            <li>If you get any error, please contact your proctor.</li>
             <li>Ensure you have a stable internet connection.</li>
             <li style={{ color: 'red' }}>You cannot switch applications. If so will lead to forfeiting your exam.</li>
-            <li>Enjoy your experience!</li>
+            <li>All the best!</li>
           </ul>
           <button
             className={sharedClasses.button}

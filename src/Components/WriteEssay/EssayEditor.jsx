@@ -3,7 +3,8 @@ import { getVerbatim } from "./getVerbatim";
 const verbatimFlaggedWords=[]
 
 const TextEditor = forwardRef(({ refText, onSave,initialvalue, onSubmit, userGroup }, ref) => {
-  const [editableText, setEditableText] = useState("");
+  const [editableText, setEditableText] = useState(initialvalue);
+  console.log("The editable content is",editableText)
   const editableContentRef = useRef(null);
   const lastWordCount = useRef(0);
   userGroup=sessionStorage.getItem("group")
@@ -11,7 +12,7 @@ const TextEditor = forwardRef(({ refText, onSave,initialvalue, onSubmit, userGro
   useImperativeHandle(ref, () => ({
     getContent: () => {
       if (editableContentRef.current) {
-        return editableContentRef.current.innerHTML;
+        return {answer:editableText,verbatimFlaggedWords:[...new Set(verbatimFlaggedWords)]};
       }
       return '';
     },

@@ -12,7 +12,11 @@ const Layout = ({ children }) => {
     // Save the timeLeft to localStorage whenever it changes
     sessionStorage.setItem('globalTimeLeft', timeLeft);
 
-    if (timeLeft === 0) return;
+    if (timeLeft === 0) {
+      // navigate("/")
+
+
+    };
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
